@@ -114,7 +114,7 @@
                         <div class="title">Please 🥺</div>
                         <div class="buttons">
                             <button onclick="handleResponse('yes')">Okay, I changed my mind</button>
-                            <button onclick="window.location.href='no_res.html'">I already said NO!</button>
+                            <button onclick="sendEmail('no')" onclick="window.location.href='no_res.html'">I already said NO!</button>
                         </div>
                     `;
                 } else if (noCount === 4) {
@@ -127,7 +127,7 @@
         function sendEmail(response) {
             const email = response === 'yes' ? 'She said yes' : 'She said no';
             const link = document.createElement('a');
-            link.href = `mailto:priyanshu291102@gmail.com?subject=${email}`;
+            link.href = `mailto:priyanshu291102@gmail.com?subject=${email}&body=From: priyans2911@gmail.com`;
             link.click();
         }
     </script>
