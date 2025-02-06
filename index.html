@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Proposal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: cursive;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6e6;
+            font-family: cursive;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+            box-shadow: 100px 100px 100px 100px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        button {
+            --bg: #000;
+            --hover-bg: #ff90e8;
+            --hover-text: #000;
+            color: #fff;
+            cursor: pointer;
+            border: 1px solid var(--bg);
+            border-radius: 4px;
+            padding: 0.8em 2em;
+            background: var(--bg);
+            transition: 0.2s;
+        }
+        button:hover {
+            color: var(--hover-text);
+            transform: translate(-0.25rem, -0.25rem);
+            background: var(--hover-bg);
+            box-shadow: 0.25rem 0.25rem var(--bg);
+        }
+        button:active {
+            transform: translate(0);
+            box-shadow: none;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background-color: #000;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="content">
+        <img height="150px" width="150px" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXAzaDJlNnp0dHhucTFzb3UwYjJ4aXFhcjB6ZXZ6bWt2ZzdyOTh4NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT0GqFhyNd0Wmfo6sM/giphy.gif" />
+        <div class="title">Will you be my valentine?</div>
+        <div>
+            <button onclick="handleResponse('yes')">Yes, I will!</button>
+            <button onclick="handleResponse('no')">No, I won't!</button>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+
+        function handleResponse(response) {
+            const content = document.getElementById('content');
+            if (response === 'yes') {
+                noCount = 0; 
+                content.innerHTML = `
+                    <img height="120px" width="150px" src="https://media.giphy.com/media/SqwG92na3vaN065L4S/giphy.gif?cid=790b76114njn0blek22voqb55ifoei1j5ij7dc6itfxq2s7x&ep=v1_gifs_search&rid=giphy.gif&ct=g" />
+                    <div class="title">I heard correct that you said yes, right?</div>
+                    <div class="buttons">
+                    <button onclick="window.location.href='yes_res.html'">Yes</button>
+                    <button onclick="handleResponse('no')">No</button>
+                </div>
+                `;
+            } else {
+                noCount++;
+                if (noCount === 1) {
+                    content.innerHTML = `
+                        <div class="title">Are you sure?</div>
+                        <div class="buttons">
+                            <button onclick="handleResponse('yes')">Sorry, maybe I will</button>
+                            <button onclick="handleResponse('no')">Yup, I won't</button>
+                        </div>
+                    `;
+                } else if (noCount === 2) {
+                    content.innerHTML = `
+                        <div class="title">Are you really sure?</div>
+                        <div class="buttons">
+                            <button onclick="handleResponse('yes')">Hmm, I guess maybe</button>
+                            <button onclick="handleResponse('no')">Oops, Never</button>
+                        </div>
+                    `;
+                } else if (noCount === 3) {
+                    content.innerHTML = `
+                        <div class="title">Please 🥺</div>
+                        <div class="buttons">
+                            <button onclick="handleResponse('yes')">Okay, I changed my mind</button>
+                            <button onclick="window.location.href='no_res.html'">I already said NO!</button>
+                        </div>
+                    `;
+                } else if (noCount === 4) {
+                    content.innerHTML = `
+                        <img height="150px" width="150px" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzRtanhmajI0bWNjcXBiMHpkOGF0MDd5dW14OWJ6azV2cXRlMHl2ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RLi2oeVZiVkE8/giphy.gif" />
+                    `;
+                }
+            }
+        }
+        function sendEmail(response) {
+            const email = response === 'yes' ? 'She said yes' : 'She said no';
+            const link = document.createElement('a');
+            link.href = `mailto:priyanshu291102@gmail.com?subject=${email}`;
+            link.click();
+        }
+    </script>
+    <footer>
+        Made with ❤️ by Priyanshu Parmar
+    </footer>
+</body>
+</html>
