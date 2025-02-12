@@ -81,10 +81,13 @@
 
     <script>
         let noCount = 0;
+        const apiKey = 'YOUR_API_KEY';
+        const spreadsheetId = 'YOUR_SPREADSHEET_ID';
+        const sheetName = 'Sheet1';
 
         function handleResponse(response) {
             const content = document.getElementById('content');
-            logResponse(response); // Log the response to Firestore
+            logResponse(response); // Log the response to Google Sheets
 
             if (response === 'yes') {
                 noCount = 0; 
@@ -131,15 +134,26 @@
         }
 
         function logResponse(response) {
-            db.collection("responses").add({
-                response: response,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/https://docs.google.com/spreadsheets/d/1e84wFRe3oNidJHF4ZTYSWbWp_UCUSxx_QqXDrwneqD0/edit?usp=sharing/values/Sheet1:append?valueInputOption=USER_ENTERED&key=AIzaSyBrCHC4y1BNky72K2K-KQbBbgEXJY5J5UM`;
+            const data = {
+                values: [
+                    [response, new Date().toLocaleString()]
+                ]
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             })
-            .then(() => {
-                console.log("Response logged successfully!");
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response logged successfully:', data);
             })
-            .catch((error) => {
-                console.error("Error logging response: ", error);
+            .catch(error => {
+                console.error('Error logging response:', error);
             });
         }
 
@@ -162,32 +176,5 @@
 
   gtag('config', 'G-NRYVYE3QK1');
 </script>
-<!-- Firebase App (the core Firebase SDK) -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<!-- Firebase Firestore SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyBrCHC4y1BNky72K2K-KQbBbgEXJY5J5UM",
-      authDomain: "secret-project-4b4c0.firebaseapp.com",
-      projectId: "secret-project-4b4c0",
-      storageBucket: "secret-project-4b4c0.firebasestorage.app",
-      messagingSenderId: "472065907909",
-      appId: "1:472065907909:web:74c49bb9ea489710dce4ac",
-      measurementId: "G-G1QEM99ZJV"
-    };
-  
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-  </script>
 </body>
 </html>
